@@ -10,18 +10,18 @@ Also built on Kaldi (http://kaldi-asr.org)
 Requires installation of barista.
 
 ## Installing barista
-   cd /install/directory
-   git init
-   git clone https://github.com/usc-sail/barista.git
+     cd /install/directory
+     git init
+     git clone https://github.com/usc-sail/barista.git
 
 Please read 'README.md' file under the top level barista folder and 
 follow the instructions to setup barista and required libraries.
 
 ## latte source files
-git clone https://github.com/dorbala/latte.git
+     git clone https://github.com/dorbala/latte.git
 
 After cloning, either
-   - place the individual files in the required repositories in the installed barista repo
+   place the individual files in the required repositories in the installed barista repo
 
 Or use the tar file latte.tar.gz under latte:
    cd path/to/latte
