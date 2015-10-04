@@ -77,10 +77,6 @@ behavior CompareWords::Run(){
 	    line.clear();
 	    line = buffer;
 	    buffer.clear();
-	   /*
-		TODO: story2, last line doesn't work.
-		because of buffer handling. it has an empty line
-	   */
 
             sentence.str(line);	
       	    while ( getline (sentence,line_split,'.') ) {
