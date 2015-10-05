@@ -1,48 +1,48 @@
 # latte
-An online Speech processing engine built on barista. Uses gtkmm for gui purposes.
+An online Speech processing engine built on barista. Uses gtkmm for the gui handles.
 
 ## barista
 Barista is an open-source framework for concurrent speech processing 
 developed and maintained by the 
 [Signal Analysis and Interpretation Lab](http://sail.usc.edu) (SAIL) at USC.
-Also built on Kaldi (http://kaldi-asr.org) 
+Barista is a wrapper inturn, on Kaldi. (http://kaldi-asr.org) 
 
-Requires installation of barista.
-
-## Installing barista
-     cd /install/directory
-     git init
+The first step is to do download the source code of barista, from the public repo on github.
+## Download barista
+     cd /install_directory_path/
      git clone https://github.com/usc-sail/barista.git
 
-Please read 'README.md' file under the top level barista folder and 
-follow the instructions to setup barista and required libraries.
-
-## latte source files
+latte requires installation of barista. But before installing barista, the following changes are to be made to ensure a smooth run of the system.
+## Download latte source files
+     cd /top_directory_barista/barista/
      git clone https://github.com/dorbala/latte.git
+     cp latte/latte.tar.gz .
+     tar xvzf latte.tar.gz
+This will update the required files in their respective places. They are also availale to view in latte/ folder.
+NOTE: The original finals are available in the latte/ folder with '-orig' extension.
 
-After cloning, either
-   place the individual files in the required repositories in the installed barista repo
-
-Or use the tar file latte.tar.gz under latte:
-   cd path/to/latte
-   cp latte.tar.gz barista/
-   tar -xvf latte.tar.gz
-
-NOTE: it will replace some of the files in the barista repo. The original files will be renamed as *.orig
+## Download portaudio
+One of the main problems you might encounter while running is the setting up of portaudio.
+Before starting the build, I recommend downloading portaudio from the http://portaudio.com/download.html and replacing the file at barista/tools/kaldi/tools.
+If you are doing this you'd need to change the install_portaudio.sh to the apt tgz name under barista/tools/kaldi/tools.
 
 ## Dependencies
 Latte requires gtkmm3 library, if that isn't already installed on your system, please do.
     sudo apt-get install gtkmm-3.0-dev
 
+## Installing barista
+Please read 'README.md' file under the top level barista folder and 
+follow the instructions to setup barista and required libraries.
+
 ## Running latte
     cd barista/
-    ./configure --prefix=`pwd` --with-compiler=g++-4.8
     make install
     cd barista/egs/live
     ./run.sh
     
-## Possible errors
-Might fail if the models are not set up. Please make sure the models directory is rightly given in barista/egs/live/conf/actors.ini
+## Possible errors while running
+Might fail if the barista/egs/models are not set up. 
+Please make sure the models directory is rightly given in barista/egs/live/conf/actors.ini or you can get them from barista git too.
 
 ## Implementation Notes
 When run, a dialog pops up that lets the user choose a text file to be processed.
