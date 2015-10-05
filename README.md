@@ -29,7 +29,7 @@ If you are doing this you'd need to change the install_portaudio.sh to the apt t
 
 ## Dependencies
 Latte requires gtkmm3 library, if that isn't already installed on your system, please do.
-    sudo apt-get install gtkmm-3.0-dev
+      sudo apt-get install gtkmm-3.0-dev
 
 ## Installing barista
 Please read 'README.md' file under the top level barista folder and 
