@@ -1,0 +1,100 @@
+ 2432  vi CMakeLists.txt 
+ 2433  cp ../barista/CMakeLists.txt .
+ 2434  git add CMakeLists.txt
+ 2435  git status
+ 2436  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2437  git push
+ 2438  ls
+ 2439  rm -rf .git/
+ 2440  ls
+ 2441  git init
+ 2442  git remote add origin https://github.com/dorbala/latte.git
+ 2443  history
+ 2444  git pull origin master
+ 2445  rm CMakeLists.txt 
+ 2446  git pull origin master
+ 2447  cp ../barista/CMakeLists.txt .
+ 2448  git add CMakeLists.txt
+ 2449  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2450  ls
+ 2451  rm latte.tar.gz 
+ 2452  ls
+ 2453  vi CMakeLists.txt 
+ 2454  tar -cvf latte.tar.gz *
+ 2455  ls
+ 2456  git reset *
+ 2457  git add *
+ 2458  git status
+ 2459  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2460  git push origin master
+ 2461  rm -rf .git/
+ 2462  ls
+ 2463  cd ../
+ 2464  rm -rf latte/
+ 2465  mkdir latte
+ 2466  cd latte/
+ 2467  ls
+ 2468  git init
+ 2469  git remote add origin http://github.com/dorbala/latte.git
+ 2470  git remote -v
+ 2471  git pull origin master
+ 2472  history
+ 2473  git pull
+ 2474  ls
+ 2475  git pull origin master
+ 2476  ls
+ 2477  cp ../barista/CMakeLists.txt .
+ 2478  ls
+ 2479  vi CMakeLists.txt 
+ 2480  tar -cvf latte.tar.gz *
+ 2481  ls
+ 2482  git add *
+ 2483  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2484  git push origin master
+ 2485  ls
+ 2486  rm latte.tar.gz 
+ 2487  git add *
+ 2488  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2489  l
+ 2490  ls
+ 2491  cd ../
+ 2492  ls
+ 2493  cd barista/
+ 2494  ls
+ 2495  vi README.md 
+ 2496  cd ../
+ 2497  ls
+ 2498  cd latte/
+ 2499  ls
+ 2500  mkdir -p src/bin/
+ 2501  cp ../barista/src/bin/barista.cc src/bin/.
+ 2502  git add src/bin/*
+ 2503  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2504  git push
+ 2505  git pull origin master
+ 2506  ls
+ 2507  git reset *
+ 2508  git add src/bin/*
+ 2509  git -c "user.email=dorbala@usc.edu" -c "user.name=dorbala" commit -m "Source files for latte"
+ 2510  git reset *
+ 2511  s
+ 2512  ls
+ 2513  ls -a
+ 2514  cd .git/
+ 2515  ls
+ 2516  vi config 
+ 2517  vi HEAD 
+ 2518  cd branches/
+ 2519  ls
+ 2520  cd ../
+ 2521  ls
+ 2522  cd refs/
+ 2523  ls
+ 2524  cd ../../
+ 2525  ls
+ 2526  rm -rf .git/
+ 2527  history | tail -100 | > log.txt
+ 2528  ls
+ 2529  vi log.txt 
+ 2530  history | tail -100
+ 2531  history | tail -100 > log.txt
