@@ -1,5 +1,6 @@
 # latte
 An online Speech processing engine built on barista. Uses gtkmm for the gui handles.
+Demo is up at (https://www.youtube.com/watch?v=ku-g0IWLZLs)
 
 ## barista
 Barista is an open-source framework for concurrent speech processing 
