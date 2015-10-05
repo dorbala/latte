@@ -30,6 +30,10 @@ Or use the tar file latte.tar.gz under latte:
 
 NOTE: it will replace some of the files in the barista repo. The original files will be renamed as *.orig
 
+## Dependencies
+Latte requires gtkmm3 library, if that isn't already installed on your system, please do.
+    sudo apt-get install gtkmm-3.0-dev
+
 ## Running latte
     cd barista/
     make install
