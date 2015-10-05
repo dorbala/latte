@@ -31,6 +31,8 @@ Or use the tar file latte.tar.gz under latte:
 NOTE: it will replace some of the files in the barista repo. The original files will be renamed as *.orig
 
 ## Running latte
+    cd barista/
+    make install
     cd barista/egs/live
     ./run.sh
 
