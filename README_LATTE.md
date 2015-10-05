@@ -36,9 +36,13 @@ Latte requires gtkmm3 library, if that isn't already installed on your system, p
 
 ## Running latte
     cd barista/
+    ./configure --prefix=`pwd` --with-compiler=g++-4.8
     make install
     cd barista/egs/live
     ./run.sh
+    
+## Possible errors
+Might fail if the models are not set up. Please make sure the models directory is rightly given in barista/egs/live/conf/actors.ini
 
 ## Implementation Notes
 When run, a dialog pops up that lets the user choose a text file to be processed.
