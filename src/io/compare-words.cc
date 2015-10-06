@@ -7,55 +7,53 @@
 
 using namespace std;
 using namespace cppa;
-bool bar::hideSig=0;
-string newtext;
-int j=0;
-std::vector<std::string> line_vec; 
+
+bool bar::newSignal=0;
+string newLine;
+std::vector<std::string> sentences; 
 int num_words;
 
-class myLabel: public Gtk::Window
+class myWindow: public Gtk::Window
 {
     public:
-        myLabel();
-        virtual ~myLabel() {};
+        myWindow();
+        virtual ~myWindow() {};
  
     protected:
-        Gtk::Label m_label;
-        string labeltext;
-        void myprocess1();
+        Gtk::Label myLabel;
+        void myDisplay();
 };
 
-myLabel::myLabel() :
-        m_label()
+myWindow::myWindow() :
+        myLabel()
 {
-    void myprocess1();
+    void myDisplay();
 
     set_title("Read out this line please.");
-    add(m_label);
+    add(myLabel);
 
-    m_label.show();
-
-    Glib::Thread::create(sigc::mem_fun(*this, &myLabel::myprocess1), true);
+    myLabel.show();
+    Glib::Thread::create(sigc::mem_fun(*this, &myWindow::myDisplay), true);
 }
 
-void myLabel::myprocess1()
+void myWindow::myDisplay()
 {
-    m_label.set_text(newtext);
+    myLabel.set_text(newLine);
     while (true) 
-	if (bar::hideSig==0) 
+	if (bar::newSignal==0) 
 		sleep(1);
 	else {
-		m_label.set_text(newtext);	
+		myLabel.set_text(newLine);	
 		sleep(1);
-		bar::hideSig=0;
+		bar::newSignal=0;
 	}
 
 }
 
-void run_label() {
+void show_window() {
 
-    myLabel mylabel;
-    Gtk::Main::run(mylabel);
+    myWindow my_window;
+    Gtk::Main::run(my_window);
 
 }
 
@@ -65,30 +63,36 @@ behavior CompareWords::Run(){
     on<atom("PROCESS"), string >() >> [=](string filename) {
       aout << "Usage: press enter to start processing." << endl;
       char c = cin.get(); 
+
+
+      /* read from file and store sentences into a vector */
       ifstream fh;
       fh.open(filename);
-      line_vec.clear();
+      sentences.clear();
       std::string line, line_split, buffer;
-      std::stringstream sentence;
+      std::stringstream lineStream;
       
       if (fh.is_open()) {
       	while ( getline (fh,line)) {
+
 	    buffer.append(line);
+
 	    line.clear();
 	    line = buffer;
 	    buffer.clear();
 
-            sentence.str(line);	
-      	    while ( getline (sentence,line_split,'.') ) {
+            lineStream.str(line);	
+
+      	    while ( getline (lineStream,line_split,'.') ) {
 		if (line.substr(line.length()-line_split.length(), line_split.length()).compare(line_split) == 0) { 
 			buffer = line_split;
 		 	buffer.append(" ");	
 		} else {
-		   line_vec.push_back(line_split);
-		   cout << line_vec.at(line_vec.size()-1) << endl;
+		   sentences.push_back(line_split);
+		   cout << sentences.at(sentences.size()-1) << endl;
 		}
 	    }
-	    sentence.clear();
+	    lineStream.clear();
 	}
         fh.close();
       }
@@ -101,50 +105,65 @@ behavior CompareWords::Run(){
         exit(1);
     }
 
-    std::thread t(run_label);
-    stringstream temp;
-    string temp_str,temp2;
-    ofstream decode_fh;
-    
-   // for the first time
+    std::thread t(show_window);
+
     num_words = 0;
-    newtext.clear();
-    newtext = line_vec.at(j);
+    newLine.clear();
+    int j=0; 
+    newLine = sentences.at(j);
+
+    /* write to a file line by line */
+    ofstream decode_fh;
     decode_fh.open( (*this).decode_file, ios_base::app);
-    decode_fh << "Original: " << newtext << endl;
+    decode_fh << "Original: " << newLine << endl;
     decode_fh.close();
-    temp.str(newtext);
-    while ( getline(temp,temp_str,' ')) num_words++; 
-    temp.clear();
+
+    stringstream tempStream;
+    string temp_str,temp2;
+    tempStream.str(newLine);
+
+    while ( getline(tempStream,temp_str,' ')) num_words++; 
+    tempStream.clear();
     temp_str.clear();
-    while(true) {
+
+    while(j<sentences.size()) {
+
        	  aout << " ++  " << name << ": Sending toggle. " << endl;
           send(subscribers, atom("TOGGLE"));
 
 	  aout << " ++ " << name << ": Sleeping... " << endl;
    	  std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+       	  aout << " ++  " << name << ": Sending toggle. " << endl;
           send(subscribers, atom("TOGGLE"));
 
-	  cout << " current word size: " << num_words << endl;		  
+	  cout << "# of words in current line: " << num_words << endl;		  
+
 	  if (num_words <= bar::decoded_words && num_words != 0) {
-	  	j++;
-		bar::hideSig=1;
-		num_words = 0;
-	  	newtext.clear();
-	  	newtext = line_vec.at(j);
+
+		bar::newSignal=1;
+		num_words = 0; // clear the number of words stored from previous line
+	  	j++; // move to the next sentence 
+	  	newLine.clear();
+	  	newLine = sentences.at(j);
+		
+		/* write the current line to report */
     		decode_fh.open(decode_file, ios_base::app);
-    		decode_fh << "\nOriginal: " << newtext << endl;
+    		decode_fh << "\nOriginal: " << newLine << endl;
     		decode_fh.close();
-  	  	temp.str(newtext);
-  	  	while ( getline(temp,temp_str,' ')) num_words++; 
-  	  	temp.clear();
+
+		/* count number of words in the current line */
+  	  	tempStream.str(newLine);
+  	  	while ( getline(tempStream,temp_str,' ')) num_words++; 
+  	  	tempStream.clear();
   	  	temp_str.clear();
+
+		/* reset the number of decoded words */
 		bar::decoded_words = 0;
-          	//send(subscribers, atom("TOGGLE"));
 	  }
 	  else {
-		bar::hideSig=1;
-	        newtext+= "\nPlease continue reading.. if you finished, read the line again.";
+		/* insufficient words recorded, display a continue prompt */
+		bar::newSignal=1;
+	        newLine+= "\nPlease continue reading.. if you finished, read the line again.";
 	  }
 
       }

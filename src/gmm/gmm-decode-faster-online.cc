@@ -97,13 +97,10 @@ void WriteBestPath(FasterOnlineDecoder &decoder,
             std::cerr << '\n';
         }
 	words_size = words.size();
+	fh.close(); 
 
         BaseFloat like = -weight.Value1() -weight.Value2();
         *tot_like += like;
-        /*fh << "Log-like per frame for utterance " << key << " is "
-        << (like / utt_frame_count) << " over "
-        << utt_frame_count << " frames.\n\n";*/
-	fh.close(); 
         /*KALDI_LOG << "Log-like per frame for utterance " << key << " is "
         << (like / utt_frame_count) << " over "
         << utt_frame_count << " frames.";
